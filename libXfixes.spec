@@ -1,14 +1,29 @@
+%global tarball libXfixes
+#global gitdate 20130524
+%global gitversion c480fe327
+
 Summary: X Fixes library
 Name: libXfixes
-Version: 5.0
-Release: 3%{?dist}
+Version: 5.0.1
+Release: 2.1%{?gitdate:.%{gitdate}git%{gitversion}}%{?dist}
 License: MIT
 Group: System Environment/Libraries
 URL: http://www.x.org
 
-Source0: ftp://ftp.x.org/pub/individual/lib/%{name}-%{version}.tar.bz2
+%if 0%{?gitdate}
+Source0:    %{tarball}-%{gitdate}.tar.bz2
+Source1:    make-git-snapshot.sh
+Source2:    commitid
+%else
+Source0: http://xorg.freedesktop.org/archive/individual/lib/%{name}-%{version}.tar.bz2
+%endif
 
+Requires: libX11 >= 1.5.99.902
+
+BuildRequires: xorg-x11-util-macros
+BuildRequires: autoconf automake libtool
 BuildRequires: pkgconfig(fixesproto) pkgconfig(xext)
+BuildRequires: libX11-devel >= 1.5.99.902
 
 %description
 X Fixes library.
@@ -23,9 +38,10 @@ Requires: pkgconfig
 libXfixes development package
 
 %prep
-%setup -q
+%setup -q -n %{tarball}-%{?gitdate:%{gitdate}}%{!?gitdate:%{version}}
 
 %build
+autoreconf -v --install --force
 %configure --disable-static
 make V=1 %{?_smp_mflags}
 
@@ -45,7 +61,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root,-)
-%doc AUTHORS COPYING README ChangeLog
+%doc AUTHORS COPYING README
 %{_libdir}/libXfixes.so.3
 %{_libdir}/libXfixes.so.3.1.0
 
@@ -57,6 +73,28 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/Xfixes.3*
 
 %changelog
+* Wed Feb 12 2014 Adam Jackson <ajax@redhat.com> 5.0.1-2.1
+- Mass rebuild
+
+* Fri Dec 27 2013 Daniel Mach <dmach@redhat.com> - 5.0.1-2
+- Mass rebuild 2013-12-27
+
+* Fri May 31 2013 Peter Hutterer <peter.hutterer@redhat.com> 5.0.1-1
+- libXfixes 5.0.1
+
+* Mon May 27 2013 Peter Hutterer <peter.hutterer@redhat.com> - 5.0-7.20130524gitc480fe327
+- Require libX11 1.6RC2 for _XEatDataWords
+
+* Fri May 24 2013 Peter Hutterer <peter.hutterer@redhat.com> 5.0-6.20130524gitc480fe327
+- Update to latest git to fix the following CVEs:
+- CVE-2013-1983
+
+* Thu Mar 07 2013 Peter Hutterer <peter.hutterer@redhat.com> - 5.0-5
+- autoreconf for aarch64
+
+* Thu Feb 14 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 5.0-4
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_19_Mass_Rebuild
+
 * Thu Jul 19 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 5.0-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_18_Mass_Rebuild
 
