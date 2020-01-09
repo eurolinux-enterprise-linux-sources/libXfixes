@@ -1,11 +1,10 @@
 Summary: X Fixes library
 Name: libXfixes
-Version: 4.0.4
-Release: 1%{?dist}
+Version: 5.0
+Release: 3%{?dist}
 License: MIT
 Group: System Environment/Libraries
 URL: http://www.x.org
-BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 Source0: ftp://ftp.x.org/pub/individual/lib/%{name}-%{version}.tar.bz2
 
@@ -28,12 +27,12 @@ libXfixes development package
 
 %build
 %configure --disable-static
-make %{?_smp_mflags}
+make V=1 %{?_smp_mflags}
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-make install DESTDIR=$RPM_BUILD_ROOT
+make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
 
 # We intentionally don't ship *.la files
 rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
@@ -58,6 +57,25 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/Xfixes.3*
 
 %changelog
+* Thu Jul 19 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 5.0-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_18_Mass_Rebuild
+
+* Fri Jan 13 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 5.0-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_17_Mass_Rebuild
+
+* Wed Mar 16 2011 Adam Jackson <ajax@redhat.com> 5.0-1
+- libXfixes 5.0
+
+* Mon Feb 07 2011 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 4.0.5-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_15_Mass_Rebuild
+
+* Thu Jun 10 2010 Peter Hutterer <peter.hutterer@redhat.com> 4.0.5-1
+- libXfixes 4.0.5
+
+* Wed Oct 21 2009 Parag <paragn@fedoraproject.org> - 4.0.4-2
+- Merge-Review #226071
+- make is not verbose
+
 * Tue Oct 13 2009 Adam Jackson <ajax@redhat.com> 4.0.4-1
 - libXfixes 4.0.4
 

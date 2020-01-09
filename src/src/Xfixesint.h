@@ -1,5 +1,4 @@
 /*
- * $XFree86: xc/lib/Xfixes/Xfixesint.h,v 1.1 2002/11/30 06:21:45 keithp Exp $
  *
  * Copyright © 2002 Keith Packard, member of The XFree86 Project, Inc.
  *
@@ -25,8 +24,6 @@
 #ifndef _XFIXESINT_H_
 #define _XFIXESINT_H_
 
-#define NEED_EVENTS
-#define NEED_REPLIES
 #include <stdio.h>
 #include <X11/Xlib.h>
 #include <X11/Xlibint.h>
