@@ -4,8 +4,8 @@
 
 Summary: X Fixes library
 Name: libXfixes
-Version: 5.0.1
-Release: 2.1%{?gitdate:.%{gitdate}git%{gitversion}}%{?dist}
+Version: 5.0.3
+Release: 1%{?gitdate:.%{gitdate}git%{gitversion}}%{?dist}
 License: MIT
 Group: System Environment/Libraries
 URL: http://www.x.org
@@ -18,7 +18,7 @@ Source2:    commitid
 Source0: http://xorg.freedesktop.org/archive/individual/lib/%{name}-%{version}.tar.bz2
 %endif
 
-Requires: libX11 >= 1.5.99.902
+Requires: libX11 >= 1.6
 
 BuildRequires: xorg-x11-util-macros
 BuildRequires: autoconf automake libtool
@@ -73,6 +73,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man3/Xfixes.3*
 
 %changelog
+* Mon Jan 23 2017 Benjamin Tissoires <benjamin.tissoires@redhat.com> 5.0.3-1
+- libXfixes 5.0.3
+
 * Wed Feb 12 2014 Adam Jackson <ajax@redhat.com> 5.0.1-2.1
 - Mass rebuild
 
